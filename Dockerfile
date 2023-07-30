@@ -1,5 +1,5 @@
 # Ubuntu release versions 18.04 and 20.04 are supported
-ARG UBUNTU_RELEASE=22.04
+ARG UBUNTU_RELEASE=20.04
 ARG CUDA_VERSION=11.2.2
 FROM nvcr.io/nvidia/cudagl:${CUDA_VERSION}-runtime-ubuntu${UBUNTU_RELEASE}
 
