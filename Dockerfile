@@ -123,13 +123,13 @@ RUN if [ "${UBUNTU_RELEASE}" = "18.04" ]; then apt-get update && apt-get install
 
 # Install VirtualGL
 ARG VIRTUALGL_VERSION_MIN=3.0.2
-RUN VIRTUALGL_VERSION=$(curl -fsSL "https://api.github.com/repos/VirtualGL/virtualgl/releases/67016359" | jq -r '.tag_name' | sed 's/[^0-9\.\-]*//g') && \
+RUN VIRTUALGL_VERSION=$(curl -fsSL "https://api.github.com/repos/VirtualGL/virtualgl/releases/67016359" | jq -r '.tag_name' | sed 's/[^0-9\.\-]*//g') && echo "\n$VIRTUALGL_VERSION\n" && \
     if [ "$(echo "${VIRTUALGL_VERSION_MIN}" "${VIRTUALGL_VERSION}" | tr " " "\n" | sort -V | head -n 1)" = "${VIRTUALGL_VERSION_MIN}" ]; then \
-    curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
-    curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb; \
+    echo "\nhey1\n" && curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
+    curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/${VIRTUALGL_VERSION}/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb; \
     else VIRTUALGL_VERSION=${VIRTUALGL_VERSION_MIN} && \
-    curl -fsSL -O https://s3.amazonaws.com/virtualgl-pr/main/linux/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
-    curl -fsSL -O https://s3.amazonaws.com/virtualgl-pr/main/linux/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb; fi &&\
+    echo "\nhey2\n" && curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
+    echo "\nhey3\n" && curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/${VIRTUALGL_VERSION}/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb; fi &&\
     apt-get update && apt-get install -y --no-install-recommends ./virtualgl_${VIRTUALGL_VERSION}_amd64.deb ./virtualgl32_${VIRTUALGL_VERSION}_amd64.deb && \
     rm virtualgl_${VIRTUALGL_VERSION}_amd64.deb virtualgl32_${VIRTUALGL_VERSION}_amd64.deb && \
     rm -rf /var/lib/apt/lists/* && \
@@ -181,6 +181,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 COPY entrypoint.sh /etc/entrypoint.sh
 RUN chmod 755 /etc/entrypoint.sh
 
+'''
 # Customized for your own application. MineRL (https://github.com/minerllabs/minerl) is installed for testing purposes.
 # java jdk 1.8
 RUN apt update -y && apt install -y software-properties-common && \
@@ -190,9 +191,12 @@ RUN apt update -y && apt install -y software-properties-common && \
     update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
 # MineRL
-RUN pip3 install pyyaml && \
-    pip3 install git+https://github.com/minerllabs/minerl@v1.0.0
+RUN pip3 install pyyaml
 
+#&& \
+#    pip3 install --upgrade minerl
+#    pip3 install git+https://github.com/minerllabs/minerl@v1.0.0
+'''
 ENV DISPLAY :0
 ENV VGL_REFRESHRATE 60
 ENV VGL_ISACTIVE 1
