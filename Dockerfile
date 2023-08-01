@@ -181,7 +181,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 COPY entrypoint.sh /etc/entrypoint.sh
 RUN chmod 755 /etc/entrypoint.sh
 
-'''
 # Customized for your own application. MineRL (https://github.com/minerllabs/minerl) is installed for testing purposes.
 # java jdk 1.8
 RUN apt update -y && apt install -y software-properties-common && \
@@ -193,10 +192,10 @@ RUN apt update -y && apt install -y software-properties-common && \
 # MineRL
 RUN pip3 install pyyaml
 
-#&& \
-#    pip3 install --upgrade minerl
+&& \
+    pip3 install --upgrade minerl
 #    pip3 install git+https://github.com/minerllabs/minerl@v1.0.0
-'''
+
 ENV DISPLAY :0
 ENV VGL_REFRESHRATE 60
 ENV VGL_ISACTIVE 1
