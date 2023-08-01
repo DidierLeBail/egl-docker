@@ -190,9 +190,7 @@ RUN apt update -y && apt install -y software-properties-common && \
     update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
 # MineRL
-RUN pip3 install pyyaml
-
-&& \
+RUN pip3 install pyyaml && \
     pip3 install --upgrade minerl
 #    pip3 install git+https://github.com/minerllabs/minerl@v1.0.0
 
